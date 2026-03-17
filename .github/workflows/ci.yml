@@ -58,23 +58,6 @@ jobs:
             output/summary.csv
             app /
 
-deploy:
-  runs-on: ubuntu-latest
-  needs: validate
-  if: github.ref== 'ref/heads/main'
 
-  steps:
-    - name: Download artefact
-      uses: actions/download-artifact@v4
-      with:
-        name: pipeline-artifact
-        path: release/
-
-    - name: Simulated Deploy
-      run: |
-          echo "Promovendo artefato aprovado para producao"
-          ls -R release
-          echo "Deploy concluido"
- 
 
 
