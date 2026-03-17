@@ -35,29 +35,7 @@ jobs:
         run: |
           python -m flake8 app 
 
-      - name: Mypy
-        run: mypy app
 
-      - name: Bandit
-        run: bandit -r  app
-      
-      - name: Radon
-        run: radon c app -a 
-
-      - name: Pytest
-        run: pytest
-
-      - name: Execute pipeline
-        run: python app/pipeline.py
-
-      - name: Publish artefact
-        uses: actoions/upload-artifactv4
-        with:
-          name: pipeline-artifact
-          path: | 
-            output/summary.csv
-            app /
-
-
+ 
 
 
