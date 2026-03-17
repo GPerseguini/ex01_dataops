@@ -30,9 +30,18 @@ jobs:
         run: |
           python -m flake8 app 
 
-      - name: pytest - Run tests
+      - name: Pytest - Run tests
         run: |
           python -m pytest tests
+
+      - name: Bandit - Security Checks
+        run: | 
+          python -m bandit -r app 
+
+      - name: randon 
+        run: |
+          python -m randon cc app -a
+          
 
 
  
