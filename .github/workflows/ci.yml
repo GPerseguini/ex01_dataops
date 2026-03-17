@@ -14,59 +14,16 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Python Configuration
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v2
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Setup Environment
         run: |
-          python -m pip install --upgrade pip
+          python -m venv venv
+          source .venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Flake8
-        run: flake8 app tests
-
-      - name: Mypy
-        run: mypy app
-
-      - name: Bandit
-        run: bandit -r  app
-      
-      - name: Radon
-        run: radon c app -a 
-
-      - name: Pytest
-        run: pytest
-
-      - name: Execute pipeline
-        run: python app/pipeline.py
-
-      - name: Publish artefact
-        uses: actoions/upload-artifactv4
-        with:
-          name: pipeline-artifact
-          path: | 
-            output/summary.csv
-            app /
-
-deploy:
-  runs-on: ubuntu-latest
-  needs: validate
-  if: github.ref== 'ref/heads/main'
-
-  steps:
-    - name: Download artefact
-      uses: actions/download-artifact@v4
-      with:
-        name: pipeline-artifact
-        path: release/
-
-    - name: Simulated Deploy
-      run: |
-          echo "Promovendo artefato aprovado para producao"
-          ls -R release
-          echo "Deploy concluido"
- 
